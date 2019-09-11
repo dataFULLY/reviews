@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import styled from 'styled-components';
 
 const Block = styled.div`
   padding: 25px 0 0 0;
@@ -73,7 +74,7 @@ class ReviewEntry extends React.Component {
 
   componentDidMount() {
     const userID = this.props.reviewEntry.users_id;
-    axios.get(`http://ec2-54-67-76-57.us-west-1.compute.amazonaws.com:3210/api/listings/users/${userID}`)
+    axios.get(`/api/listings/users/${userID}`)
       .then((listingUser) => {
         this.setState({
           user: listingUser.data[0],
@@ -86,7 +87,7 @@ class ReviewEntry extends React.Component {
 
     const responseID = this.props.reviewEntry.responses_id;
     if (responseID) {
-      axios.get(`http://ec2-54-67-76-57.us-west-1.compute.amazonaws.com:3210/api/listings/review/response/${responseID}`)
+      axios.get(`/api/listings/review/response/${responseID}`)
         .then((reviewResponse) => {
           this.setState({
             response: reviewResponse.data[0].comment,

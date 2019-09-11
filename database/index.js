@@ -15,11 +15,6 @@ connection.connect((err) => {
   }
 });
 
-connection.query('SELECT 1 + 1 AS solution', (error, results) => {
-  if (error) throw error;
-  console.log('The solution is: ', results[0].solution);
-});
-
 const getListingReviews = (listingID, callback) => {
   connection.query(`SELECT * FROM reviews WHERE listings_id = ${listingID}`, (error, results) => {
     if (error) {

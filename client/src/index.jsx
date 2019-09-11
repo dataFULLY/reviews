@@ -4,6 +4,7 @@ import axios from 'axios';
 import $ from 'jquery';
 import Summary from './components/Summary.jsx';
 import ReviewList from './components/ReviewList.jsx';
+import styled from 'styled-components';
 
 const BaseStyle = styled.div`
   width: 648px;
@@ -54,7 +55,7 @@ class ReviewsModule extends React.Component {
   componentDidMount() {
     // 1. get all the reviews for a particular listing
     const listingID = window.location.href.split('/').reverse()[1];
-    axios.get(`http://ec2-54-67-76-57.us-west-1.compute.amazonaws.com:3210/api/listings/${listingID}/reviews`)
+    axios.get(`/api/listings/${listingID}/reviews`)
       .then((listingReviews) => {
       // 2. update the reviews state
         this.setState({
@@ -104,7 +105,7 @@ class ReviewsModule extends React.Component {
         console.log(error);
       });
 
-    axios.get(`http://ec2-54-67-76-57.us-west-1.compute.amazonaws.com:3210/api/listings/${listingID}/host`)
+    axios.get(`/api/listings/${listingID}/host`)
       .then((listingHost) => {
         this.setState({
           host: listingHost.data[0],
