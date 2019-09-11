@@ -1,3 +1,5 @@
+package.json
+
 ## MAC files ##
 .DS_Store
 
@@ -22,4 +24,5 @@ coverage
 
 # Compiled Dirs (http://nodejs.org/api/addons.html)
 build/
-
+client/dist/bundle.js
+client/dist/bundle.js.gz

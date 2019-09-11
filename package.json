@@ -1,5 +1,5 @@
 {
-  "name": "minc-tech-reviews-module",
+  "name": "reviews-module",
   "version": "1.0.0",
   "description": "",
   "jest": {
@@ -25,9 +25,10 @@
     "node": ">=6.13.0"
   },
   "scripts": {
-    "react-dev": "webpack -d -p --watch --mode=production",
-    "server-dev": "nodemon server/index.js",
-    "seeder": "node database/seeder.js",
+    "build": "webpack -d --watch",
+    "start": "nodemon server/index.js",
+    "create-db": "mysql -u root"
+    "seed": "node database/seeder.js",
     "test": "jest --coverage"
   },
   "dependencies": {
@@ -36,6 +37,7 @@
     "compression": "^1.7.4",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "express-static-gzip": "^2.0.5",
     "faker": "^4.1.0",
     "jquery": "^3.4.1",
     "morgan": "^1.9.1",
@@ -57,18 +59,16 @@
     "babel-loader": "^8.0.6",
     "babel-plugin-styled-components": "^1.10.6",
     "babel-preset-airbnb": "^4.0.1",
-    "brotli-webpack-plugin": "^1.1.0",
     "compression-webpack-plugin": "^3.0.0",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
-    "eslint": "^6.2.1",
+    "eslint": "^6.3.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.14.3",
     "eslint-plugin-react-hooks": "^1.7.0",
-    "express-static-gzip": "^2.0.5",
     "jest": "^24.9.0",
     "jest-environment-enzyme": "^7.1.0",
     "jest-enzyme": "^7.1.0",

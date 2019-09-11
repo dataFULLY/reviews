@@ -1,77 +1,21 @@
-# Project Minc Tech Airbnb
+# Reviews Module
 
 > Project description
-> - This is a mock up of an Airbnb listings page
+> - A reviews component that allows the user to perform CRUD operations.
 
 ## Related Projects
 
-  - https://github.com/minctech/reviews
-  <!-- - https://github.com/teamName/repo -->
+> - https://github.com/dataFULLY/reviews-proxy
 
-## Table of Contents
+## Getting Started
 
-1. [Usage](#Usage)
-1. [Requirements](#requirements)
-1. [Development](#development)
+> Run the following scripts
+> 1. npm start
+> 2. npm run react-dev
+> 3. npm run seeder
+> 4. npm run server-dev
 
-## Usage
+# API Endpoints/CRUD Operations
 
-> Some usage instructions
-
-## Requirements
-
-An `nvmrc` file is included if using [nvm](https://github.com/creationix/nvm).
-
-- Node 12.8.0
-- etc
-
-## Development
-
-### Installing Dependencies
-
-From within the root directory:
-
-```sh
-make sure you have your project\'s file structure \\set up as follows:
-your-project
-  -> client
-    -> dist
-      -> index.html
-    -> src
-      -> components
-        -> Component1.jsx
-      -> index.jsx
-
-npm install webpack --save-dev
-npm install webpack-cli --save-dev
-
-add \"react-dev\": \"webpack -d --watch\" to scripts \\in package.json
-
-npm install babel-loader @babel/core @babel/preset-env @babel/preset-react --save-dev
-
-create webpack.config.js and add:
-module.exports = {
-  entry: __dirname + '/client/src/index.jsx',
-  module: {
-    rules: [
-      {
-        test: [/\.jsx$/],
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-react', '@babel/preset-env']
-          }
-        }
-      }
-    ]
-  },
-    output: {
-    filename: 'bundle.js',
-    path: __dirname + '/client/dist'
-  }
-};
-
-npm run react-dev
-```
+## GET /
 

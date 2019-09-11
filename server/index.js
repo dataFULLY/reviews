@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const express = require('express');
 const expressStaticGzip = require('express-static-gzip');
 
@@ -11,14 +12,15 @@ const db = require('../database/index.js');
 
 app.use(compression());
 app.use(cors());
-// app.use(express.static(`${__dirname}/../client/dist`));
+
 app.use(expressStaticGzip(`${__dirname}/../client/dist`, {
   enableBrotli: true,
   orderPreference: ['br', 'gz'],
-  setHeaders (res, path) {
-    res.setHeader("Cache-Control", "public, max-age=31536000");
+  setHeaders(res) {
+    res.setHeader('Cache-Control', 'public, max-age=31536000');
   },
 }));
+
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -75,4 +77,4 @@ app.get('/api/listings/review/response/:response_id', (req, res) => {
   });
 });
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+app.listen(port, () => console.log(`Listening on port ${port}!`));

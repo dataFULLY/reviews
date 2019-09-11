@@ -1,21 +1,27 @@
+/* eslint-disable no-console */
 const mysql = require('mysql');
 
-const connection = mysql.createConnection({ //docker exec -it mysql bash
-  host: '172.17.0.2', // change this for aws ec2 instance, docker network inspect bridge
+const connection = mysql.createConnection({
+  host: 'localhost',
   user: 'root',
-  password: 'password',
   database: 'reviewsmodule',
 });
 
-connection.connect();
+connection.connect((err) => {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log('Connection established');
+  }
+});
 
-connection.query('SELECT 1 + 1 AS solution', (error, results, fields) => {
+connection.query('SELECT 1 + 1 AS solution', (error, results) => {
   if (error) throw error;
   console.log('The solution is: ', results[0].solution);
 });
 
-const getListingReviews = function (listingID, callback) {
-  connection.query(`SELECT * FROM reviews WHERE listings_id = ${listingID}`, (error, results, fields) => {
+const getListingReviews = (listingID, callback) => {
+  connection.query(`SELECT * FROM reviews WHERE listings_id = ${listingID}`, (error, results) => {
     if (error) {
       callback(error);
     } else {
@@ -24,8 +30,8 @@ const getListingReviews = function (listingID, callback) {
   });
 };
 
-const getListingHost = function (listingID, callback) {
-  connection.query(`SELECT host_pic, host_name FROM listings WHERE id = ${listingID}`, (error, results, fields) => {
+const getListingHost = (listingID, callback) => {
+  connection.query(`SELECT host_pic, host_name FROM listings WHERE id = ${listingID}`, (error, results) => {
     if (error) {
       callback(error);
     } else {
@@ -34,8 +40,8 @@ const getListingHost = function (listingID, callback) {
   });
 };
 
-const getReviewUser = function (userID, callback) {
-  connection.query(`SELECT * FROM users WHERE id = ${userID}`, (error, results, fields) => {
+const getReviewUser = (userID, callback) => {
+  connection.query(`SELECT * FROM users WHERE id = ${userID}`, (error, results) => {
     if (error) {
       callback(error);
     } else {
@@ -44,8 +50,8 @@ const getReviewUser = function (userID, callback) {
   });
 };
 
-const getReviewResponse = function (responseID, callback) {
-  connection.query(`SELECT * FROM responses WHERE id = ${responseID}`, (error, results, fields) => {
+const getReviewResponse = (responseID, callback) => {
+  connection.query(`SELECT * FROM responses WHERE id = ${responseID}`, (error, results) => {
     if (error) {
       callback(error);
     } else {
