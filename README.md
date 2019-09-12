@@ -10,12 +10,94 @@
 ## Getting Started
 
 > Run the following scripts
-> 1. npm start
-> 2. npm run react-dev
-> 3. npm run seeder
-> 4. npm run server-dev
+> 1. npm install
+> 2. npm run build
+> 3. npm run create-db
+> 4. npm run seeder
+> 5. npm start
 
-# API Endpoints/CRUD Operations
+## API Endpoints/CRUD Operations
 
-## GET /
+### POST / Create
 
+> Route: /api/listings/:id/reviews
+
+> Parameters:
+> - listing_id
+> - user_id
+> - date
+> - comment
+> - accuracy
+> - communication
+> - cleanliness
+> - location
+> - check_in
+> - value
+
+> Response: created review_id
+
+> Status Code: 201
+
+### GET / Read
+
+> Route: /api/listings/:id/reviews
+
+> Parameters:
+> - listing_id
+
+> Example Response:
+```
+[
+  {
+    "id": 7,
+    "listings_id": 11,
+    "users_id": 8,
+    "date": "June 2019",
+    "comment": "Maiores sit aut itaque nemo",
+    "accuracy": 5,
+    "communication": 5,
+    "cleanliness": 5,
+    "location": 5,
+    "check_in": 4,
+    "value": 4,
+    "responses_id": null
+  }
+]
+```
+> Status Code: 200
+
+### PUT / Update
+
+> Route: /api/reviews/:review_id
+
+> Parameters:
+> - review_id
+
+**and**
+
+> At least one of the following:
+> - listing_id
+> - user_id
+> - date
+> - comment
+> - accuracy
+> - communication
+> - cleanliness
+> - location
+> - check_in
+> - value
+
+> Response: review_id of updated review
+
+> Status Code: 200
+
+### DELETE / Delete
+
+> Route: /api/reviews/:review_id
+
+> Parameters:
+> - review_id
+
+> Response: review_id of deleted review
+
+> Status Code: 200

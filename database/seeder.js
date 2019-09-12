@@ -81,7 +81,7 @@ for (let i = 0; i < 2100; i++) {
     communication: `${randomInt(five)}`,
     cleanliness: `${randomInt(five)}`,
     location: `${randomInt(five)}`,
-    checkin: `${randomInt(five)}`,
+    check_in: `${randomInt(five)}`,
     value: `${randomInt(five)}`,
     responses_id: `${randomInt(hundred)}` < 25 ? `${randomInt(hundred)}` : null,
   };

@@ -32,13 +32,13 @@ CREATE TABLE reviews (
   communication INT NOT NULL,
   cleanliness INT NOT NULL,
   location INT NOT NULL,
-  checkin INT NOT NULL,
+  check_in INT NOT NULL,
   value INT NOT NULL,
   responses_id INT NULL,
   FOREIGN KEY (listings_id) REFERENCES listings (id),
   FOREIGN KEY (users_id) REFERENCES users (id),
   FOREIGN KEY (responses_id) REFERENCES responses (id)
-)
+);
 
 /*  Execute this file from the command line by typing:
  *    mysql -u <USER> -p < schema.sql
