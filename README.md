@@ -58,7 +58,7 @@
     "communication": 5,
     "cleanliness": 5,
     "location": 5,
-    "check_in": 4,
+    "checkin": 4,
     "value": 4,
     "responses_id": null
   }
@@ -84,7 +84,7 @@
 > - communication
 > - cleanliness
 > - location
-> - check_in
+> - checkin
 > - value
 
 > Response: review_id of updated review
