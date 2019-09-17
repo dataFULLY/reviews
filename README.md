@@ -22,7 +22,7 @@
 
 > Route: /api/listings/:id/reviews
 
-> Parameters:
+> Request Body:
 > - listing_id
 > - user_id
 > - date
@@ -31,7 +31,7 @@
 > - communication
 > - cleanliness
 > - location
-> - check_in
+> - checkin
 > - value
 
 > Response: created review_id
@@ -41,9 +41,6 @@
 ### GET / Read
 
 > Route: /api/listings/:id/reviews
-
-> Parameters:
-> - listing_id
 
 > Example Response:
 ```
@@ -70,7 +67,7 @@
 
 > Route: /api/reviews/:review_id
 
-> Parameters:
+> Request Body:
 > - review_id
 
 **and**
@@ -94,9 +91,6 @@
 ### DELETE / Delete
 
 > Route: /api/reviews/:review_id
-
-> Parameters:
-> - review_id
 
 > Response: review_id of deleted review
 

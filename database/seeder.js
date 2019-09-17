@@ -1,101 +1,184 @@
+/* eslint-disable no-console */
 const faker = require('faker');
-const db = require('./index.js');
+const fs = require('file-system');
+const path = require('path');
 
-const five = 5;
-const hundred = 100;
-const randomInt = function (max) {
-  let num = Math.ceil(Math.random() * max);
-  // all IDs start at 1 and not 0
-  if (num < 1) {
-    num = 1;
-  }
+// Number of records
+const numberOfListings = 1000000;
+const numberOfUsers = 1000000;
+const numberOfResponses = 2500000;
+const numberOfReviews = 10000000;
 
-  // I'm assuming no ratings will be lower than 2 stars
-  if (max === five && num < 2) {
-    return randomInt(max);
-  }
+// Create 10 Million listings
 
-  return num;
+const avatar = faker.image.avatar();
+
+const firstName = 'fred';
+
+const wsListing = fs.createWriteStream(path.join(__dirname, 'listings.csv'));
+
+const title = 'house';
+
+const createListing = () => `${title},${avatar},${firstName}\n`;
+
+const tenMillionListings = (writer, data, encoding) => {
+  let i = numberOfListings;
+  writer.write('name,host_pic,host_name\n');
+  const write = () => {
+    let ok = true;
+    do {
+      i -= 1;
+      if (i === 0) {
+        writer.write(data(), encoding);
+        console.log('Writing last listing...\n');
+      } else {
+        ok = writer.write(data(), encoding);
+      }
+    } while (i > 0 && ok);
+    if (i > 0) {
+      writer.once('drain', write);
+    }
+  };
+  write();
 };
+
+tenMillionListings(wsListing, createListing, 'utf8');
+
+
+// Create 10 Million Users
+
+const wsUser = fs.createWriteStream(path.join(__dirname, 'users.csv'));
+
+const createUser = () => `${avatar},${firstName}\n`;
+
+const tenMillionUsers = (writer, data, encoding) => {
+  let i = numberOfUsers;
+  writer.write('pic,name\n');
+  const write = () => {
+    let ok = true;
+    do {
+      i -= 1;
+      if (i === 0) {
+        writer.write(data(), encoding);
+        console.log('Writing last user...\n');
+      } else {
+        ok = writer.write(data(), encoding);
+      }
+    } while (i > 0 && ok);
+    if (i > 0) {
+      writer.once('drain', write);
+    }
+  };
+  write();
+};
+
+tenMillionUsers(wsUser, createUser, 'utf8');
+
+
+// Create 25 Milliion Responses
+
+const wsResponse = fs.createWriteStream(path.join(__dirname, 'responses.csv'));
+
+const description = 'hello world';
+
+const createResponse = () => `${description}\n`;
+
+const twentyFiveMillionResponses = (writer, data, encoding) => {
+  let i = numberOfResponses;
+  writer.write('comment\n');
+  const write = () => {
+    let ok = true;
+    do {
+      i -= 1;
+      if (i === 0) {
+        writer.write(data(), encoding);
+        console.log('Writing last response...\n');
+      } else {
+        ok = writer.write(data(), encoding);
+      }
+    } while (i > 0 && ok);
+    if (i > 0) {
+      writer.once('drain', write);
+    }
+  };
+  write();
+};
+
+twentyFiveMillionResponses(wsResponse, createResponse, 'utf8');
+
+
+// Create 100 Million Reviews
+
+const randomListingId = (listings = numberOfListings) => {
+  const randomListing = Math.ceil(Math.random() * listings);
+  if (randomListing === 0) {
+    return randomListingId();
+  }
+  return randomListing;
+};
+
+const randomUserId = (users = numberOfUsers) => {
+  const randomUser = Math.ceil(Math.random() * users);
+  if (randomUser === 0) {
+    return randomUserId();
+  }
+  return randomUser;
+};
+
+let assignedResponses = 0;
+const getResponseId = (responses = numberOfResponses) => {
+  assignedResponses += 1;
+  if (assignedResponses > responses) {
+    return '';
+  }
+  return assignedResponses;
+};
+
+const randomRating = (max = 5) => Math.ceil(Math.random() * max);
 
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-for (let i = 0; i < hundred; i++) {
-  // seed listings table
-  const listing = {
-    name: `${faker.lorem.words()}`,
-    host_pic: `${faker.image.avatar()}`,
-    host_name: `${faker.name.firstName()}`,
-  };
-
-  db.connection.query('INSERT INTO listings SET ?', listing, (error, results, fields) => {
-    if (error) {
-      console.log('LISTING INSERT ERROR:');
-      console.log(error);
-    } else {
-      console.log('LISTING INSERT SUCCESS');
-    }
-  });
-
-  // seed users table
-  const user = {
-    pic: `${faker.image.avatar()}`,
-    name: `${faker.name.firstName()}`,
-  };
-
-  db.connection.query('INSERT INTO users SET ?', user, (error, results, fields) => {
-    if (error) {
-      console.log('USER INSERT ERROR:');
-      console.log(error);
-    } else {
-      console.log('USER INSERT SUCCESS');
-    }
-  });
-
-  // seed responses table
-  const response = {
-    comment: `${faker.lorem.paragraph()}`,
-  };
-
-  db.connection.query('INSERT INTO responses SET ?', response, (error, results, fields) => {
-    if (error) {
-      console.log('RESPONSE INSERT ERROR:');
-      console.log(error);
-    } else {
-      console.log('RESPONSE INSERT SUCCESS');
-    }
-  });
-}
-
-for (let i = 0; i < 2100; i++) {
-  // seed reviews table
-  let reviewDate = new Date(`${faker.date.past().toString()}`);
+const createReviewDate = () => {
+  let reviewDate = new Date(`${faker.date.past()}`);
   reviewDate = `${months[reviewDate.getMonth()]} ${reviewDate.getFullYear()}`;
+  return reviewDate;
+};
 
-  const review = {
-    listings_id: `${randomInt(hundred)}`,
-    users_id: `${randomInt(hundred)}`,
-    date: reviewDate,
-    comment: `${faker.lorem.paragraph()}`,
-    accuracy: `${randomInt(five)}`,
-    communication: `${randomInt(five)}`,
-    cleanliness: `${randomInt(five)}`,
-    location: `${randomInt(five)}`,
-    checkin: `${randomInt(five)}`,
-    value: `${randomInt(five)}`,
-    responses_id: `${randomInt(hundred)}` < 25 ? `${randomInt(hundred)}` : null,
-  };
+const wsReviews = fs.createWriteStream(path.join(__dirname, 'reviews.csv'));
 
-  db.connection.query('INSERT INTO reviews SET ?', review, (error, results, fields) => {
-    if (error) {
-      console.log('RESPONSE INSERT ERROR:');
-      console.log(error);
-    } else {
-      console.log('REVIEW INSERT SUCCESS');
+let reviewCounter = 0;
+const createReview = () => {
+  let responseID;
+  reviewCounter += 1;
+  if (reviewCounter < numberOfResponses) {
+    responseID = getResponseId();
+  } else {
+    responseID = '';
+  }
+  return `${randomListingId()},${randomUserId()},${responseID},${createReviewDate()},${description},${randomRating()},${randomRating()},${randomRating()},${randomRating()},${randomRating()},${randomRating()}\n`;
+};
+
+const hundredMillionReviews = (writer, data, encoding) => {
+  let i = numberOfReviews;
+  writer.write('listings_id,users_id,responses_id,date,comment,accuracy,communication,cleanliness,location,checkin,value\n');
+  const write = () => {
+    let ok = true;
+    do {
+      i -= 1;
+      if (i === 0) {
+        writer.write(data(), encoding);
+        console.log('Writing last review...\n');
+      } else {
+        ok = writer.write(data(), encoding);
+      }
+    } while (i > 0 && ok);
+    if (i > 0) {
+      writer.once('drain', write);
     }
-  });
-}
+  };
+  write();
+};
 
-console.log('seeder running');
+hundredMillionReviews(wsReviews, createReview, 'utf8');
 
-db.connection.end();
+// db.connection.end();
