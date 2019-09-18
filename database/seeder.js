@@ -125,7 +125,7 @@ const randomUserId = (users = numberOfUsers) => {
   return randomUser;
 };
 
-// Assigne first 2.5 million reiviews a responseId
+// Assign first 2.5 million reviews a responseId
 let assignedResponses = 0;
 const getResponseId = (responses = numberOfResponses) => {
   assignedResponses += 1;
