@@ -4,10 +4,10 @@ const fs = require('file-system');
 const path = require('path');
 
 // Number of records
-const numberOfListings = 100;
-const numberOfUsers = 100;
-const numberOfResponses = 250;
-const numberOfReviews = 1000;
+const numberOfListings = 1000000;
+const numberOfUsers = 1000000;
+const numberOfResponses = 2500000;
+const numberOfReviews = 10000000;
 
 // Create 10 Million listings
 
@@ -18,20 +18,20 @@ const title = 'house';
 
 const wsListing = fs.createWriteStream(path.join(__dirname, 'listings.csv'));
 
-const createListing = () => `${title},${avatar},${firstName}\n`;
+const createListing = (i) => `${i + 1},${title},${avatar},${firstName}\n`;
 
 const tenMillionListings = (writer, data, encoding) => {
   let i = numberOfListings;
-  writer.write('name,host_pic,host_name\n');
+  writer.write('id,name,host_pic,host_name\n');
   const write = () => {
     let ok = true;
     do {
       i -= 1;
       if (i === 0) {
-        writer.write(data(), encoding);
+        writer.write(data(i), encoding);
         console.log('Writing last listing...\n');
       } else {
-        ok = writer.write(data(), encoding);
+        ok = writer.write(data(i), encoding);
       }
     } while (i > 0 && ok);
     if (i > 0) {
@@ -48,7 +48,7 @@ tenMillionListings(wsListing, createListing, 'utf8');
 
 const wsUser = fs.createWriteStream(path.join(__dirname, 'users.csv'));
 
-const createUser = () => `${avatar},${firstName}\n`;
+const createUser = (i) => `${i + 1},${avatar},${firstName}\n`;
 
 const tenMillionUsers = (writer, data, encoding) => {
   let i = numberOfUsers;
@@ -58,10 +58,10 @@ const tenMillionUsers = (writer, data, encoding) => {
     do {
       i -= 1;
       if (i === 0) {
-        writer.write(data(), encoding);
+        writer.write(data(i), encoding);
         console.log('Writing last user...\n');
       } else {
-        ok = writer.write(data(), encoding);
+        ok = writer.write(data(i), encoding);
       }
     } while (i > 0 && ok);
     if (i > 0) {
@@ -81,7 +81,7 @@ const wsResponse = fs.createWriteStream(path.join(__dirname, 'responses.csv'));
 // Fake description
 const description = 'hello world';
 
-const createResponse = () => `${description}\n`;
+const createResponse = (i) => `${i + 1},${description}\n`;
 
 const twentyFiveMillionResponses = (writer, data, encoding) => {
   let i = numberOfResponses;
@@ -91,10 +91,10 @@ const twentyFiveMillionResponses = (writer, data, encoding) => {
     do {
       i -= 1;
       if (i === 0) {
-        writer.write(data(), encoding);
+        writer.write(data(i), encoding);
         console.log('Writing last response...\n');
       } else {
-        ok = writer.write(data(), encoding);
+        ok = writer.write(data(i), encoding);
       }
     } while (i > 0 && ok);
     if (i > 0) {
@@ -125,7 +125,7 @@ const randomUserId = (users = numberOfUsers) => {
   return randomUser;
 };
 
-// Assign first 2.5 million reviews a responseId
+// Assigne first 2.5 million reiviews a responseId
 let assignedResponses = 0;
 const getResponseId = (responses = numberOfResponses) => {
   assignedResponses += 1;
@@ -148,15 +148,14 @@ const createReviewDate = () => {
 const wsReviews = fs.createWriteStream(path.join(__dirname, 'reviews.csv'));
 
 let reviewCounter = 0;
-const createReview = () => {
+const createReview = (i) => {
   let responseID;
   reviewCounter += 1;
-  if (reviewCounter < numberOfResponses) {
-    responseID = getResponseId();
+  if (reviewCounter <= numberOfResponses) {
+    return `${i + 1},${randomListingId()},${randomUserId()},${getResponseId()},${createReviewDate()},${description},${randomRating()},${randomRating()},${randomRating()},${randomRating()},${randomRating()},${randomRating()}\n`;
   } else {
-    responseID = '';
+    return `${i + 1},${randomListingId()},${randomUserId()},,${createReviewDate()},${description},${randomRating()},${randomRating()},${randomRating()},${randomRating()},${randomRating()},${randomRating()}\n`;
   }
-  return `${randomListingId()},${randomUserId()},${responseID},${createReviewDate()},${description},${randomRating()},${randomRating()},${randomRating()},${randomRating()},${randomRating()},${randomRating()}\n`;
 };
 
 const hundredMillionReviews = (writer, data, encoding) => {
@@ -167,10 +166,10 @@ const hundredMillionReviews = (writer, data, encoding) => {
     do {
       i -= 1;
       if (i === 0) {
-        writer.write(data(), encoding);
+        writer.write(data(i), encoding);
         console.log('Writing last review...\n');
       } else {
-        ok = writer.write(data(), encoding);
+        ok = writer.write(data(i), encoding);
       }
     } while (i > 0 && ok);
     if (i > 0) {
