@@ -52,12 +52,6 @@ ADD CONSTRAINT foreign2 FOREIGN KEY (users_id) REFERENCES users (id),
 ADD CONSTRAINT foreign3 FOREIGN KEY (responses_id) REFERENCES responses (id);
 
 /*
--- FOREIGN KEY (listings_id) REFERENCES listings (id),
-  -- FOREIGN KEY (users_id) REFERENCES users (id),
-  -- FOREIGN KEY (responses_id) REFERENCES responses (id)
-
-
   Execute this file from the command line by typing:
-  psql -h localhost -f schema.sql
-
+    psql -h localhost -f schema.sql
 */

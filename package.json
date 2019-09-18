@@ -28,7 +28,8 @@
     "build": "webpack -d --watch",
     "start": "nodemon server/index.js",
     "create-db": "mysql -u root < schema.sql",
-    "seed": "node database/seeder.js",
+    "seed:postgres": "node database/seeder.js",
+    "seed:cassandra": "node database/cassandraSeed.js",
     "test": "jest --coverage"
   },
   "dependencies": {
