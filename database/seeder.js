@@ -4,10 +4,10 @@ const fs = require('file-system');
 const path = require('path');
 
 // Number of records
-const numberOfListings = 100;
-const numberOfUsers = 100;
-const numberOfResponses = 250;
-const numberOfReviews = 1000;
+const numberOfListings = 1000000;
+const numberOfUsers = 1000000;
+const numberOfResponses = 2500000;
+const numberOfReviews = 10000000;
 
 // Create 10 Million listings
 

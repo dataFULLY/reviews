@@ -19,7 +19,7 @@ app.get('/api/listings/:listing_id/reviews', (req, res) => {
   const listingID = req.params.listing_id;
   db.getListingReviews(listingID, (error, data) => {
     if (error) {
-      console.log('SERVER GET LISTING REVIEWS ERROR: ', error);
+      console.log('SERVER GET RERVIEW HOST ERROR', error);
       res.status(500).send(error);
     } else {
       res.status(200).send(data);

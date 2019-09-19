@@ -51,6 +51,16 @@ ADD CONSTRAINT foreign1 FOREIGN KEY (listings_id) REFERENCES listings (id),
 ADD CONSTRAINT foreign2 FOREIGN KEY (users_id) REFERENCES users (id),
 ADD CONSTRAINT foreign3 FOREIGN KEY (responses_id) REFERENCES responses (id);
 
+
+CREATE INDEX idx_review_listings_id
+ON reviews(listings_id);
+
+CREATE INDEX idx_review_users_id
+ON reviews(users_id);
+
+CREATE INDEX idx_review_responses_id
+ON reviews(responses_id);
+
 /*
   Execute this file from the command line by typing:
     psql -h localhost -f schema.sql
