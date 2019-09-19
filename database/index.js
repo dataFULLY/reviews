@@ -8,57 +8,51 @@ const client = new Client({
 
 client.connect()
   .then(() => console.log('Connected successfully'))
-  .catch((err) => console.log(err))
-  .then(() => {
-    console.log('Ending connection...');
-    client.end();
+  .catch((err) => console.log(err, 'from index.js'));
+
+const getListingReviews = (listingID, callback) => {
+  client.query(`SELECT * FROM reviews WHERE listings_id=${listingID}`, (error, results) => {
+    if (error) {
+      callback(error);
+    } else {
+      callback(null, results);
+    }
   });
+};
 
-// const getListingReviews = (listingID, callback) => {
-// eslint-disable-next-line max-len
-//   connection.query(`SELECT * FROM reviews WHERE listings_id = ${listingID}`, (error, results) => {
-//     if (error) {
-//       callback(error);
-//     } else {
-//       callback(null, results);
-//     }
-//   });
-// };
+const getListingHost = (listingID, callback) => {
+  client.query(`SELECT host_pic, host_name FROM listings WHERE id=${listingID}`, (error, results) => {
+    if (error) {
+      callback(error);
+    } else {
+      callback(null, results);
+    }
+  });
+};
 
-// const getListingHost = (listingID, callback) => {
-//   connection.query(`SELECT host_pic, host_name FROM listings WHERE id = ${listingID}`, (error, results) => {
-//     if (error) {
-//       callback(error);
-//     } else {
-//       callback(null, results);
-//     }
-//   });
-// };
+const getReviewUser = (userID, callback) => {
+  client.query(`SELECT * FROM users WHERE id=${userID}`, (error, results) => {
+    if (error) {
+      callback(error);
+    } else {
+      callback(null, results);
+    }
+  });
+};
 
-// const getReviewUser = (userID, callback) => {
-//   connection.query(`SELECT * FROM users WHERE id = ${userID}`, (error, results) => {
-//     if (error) {
-//       callback(error);
-//     } else {
-//       callback(null, results);
-//     }
-//   });
-// };
+const getReviewResponse = (responseID, callback) => {
+  client.query(`SELECT * FROM responses WHERE id = ${responseID}`, (error, results) => {
+    if (error) {
+      callback(error);
+    } else {
+      callback(null, results);
+    }
+  });
+};
 
-// const getReviewResponse = (responseID, callback) => {
-//   connection.query(`SELECT * FROM responses WHERE id = ${responseID}`, (error, results) => {
-//     if (error) {
-//       callback(error);
-//     } else {
-//       callback(null, results);
-//     }
-//   });
-// };
-
-// module.exports = {
-//   // connection,
-//   getListingReviews,
-//   getListingHost,
-//   getReviewUser,
-//   getReviewResponse,
-// };
+module.exports = {
+  getListingReviews,
+  getListingHost,
+  getReviewUser,
+  getReviewResponse,
+};

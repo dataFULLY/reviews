@@ -38,22 +38,28 @@ CREATE TABLE reviews(
   location SMALLINT,
   checkin SMALLINT,
   value SMALLINT,
-  PRIMARY KEY (id)
+  PRIMARY KEY ((id), listings_id, users_id)
 );
 
-COPY listings(id, name, host_pic, host_name) FROM '/Users/boss/HRSF122/reviews/database/listings.csv' WITH DELIMITER = ',' AND HEADER = TRUE;
+COPY listings(id, name, host_pic, host_name) FROM '/Users/boss/HRSF122/reviews/database/listings.csv' WITH HEADER = TRUE;
 
-COPY users(id, pic, name) FROM '/Users/boss/HRSF122/reviews/database/users.csv' WITH DELIMITER = ',' AND HEADER = TRUE;
+COPY users(id, pic, name) FROM '/Users/boss/HRSF122/reviews/database/users.csv' WITH HEADER = TRUE;
 
-COPY responses(id, comment) FROM '/Users/boss/HRSF122/reviews/database/responses.csv' WITH DELIMITER = ',' AND HEADER = TRUE;
+COPY responses(id, comment) FROM '/Users/boss/HRSF122/reviews/database/responses.csv' WITH HEADER = TRUE;
 
-COPY reviews(id, listings_id, users_id, responses_id, date, comment, accuracy, communication, cleanliness, location, checkin, value) FROM '/Users/boss/HRSF122/reviews/database/reviews.csv' WITH DELIMITER = ',' AND HEADER = TRUE;
+COPY reviews(id, listings_id, users_id, responses_id, date, comment, accuracy, communication, cleanliness, location, checkin, value) FROM '/Users/boss/HRSF122/reviews/database/reviews.csv' WITH HEADER = TRUE;
+
+CREATE INDEX idx_review_listings_id
+ON reviews(listings_id);
+
+CREATE INDEX idx_review_users_id
+ON reviews(users_id);
+
+CREATE INDEX idx_review_responses_id
+ON reviews(responses_id);
 
 /*
 
-WITH CLUSTERING ORDER BY (id ASC, listings_id DESC, users_id DESC, responses_id DESC)
-
-
   Execute this file from the command line by typing:
-    psql -h localhost -f schema.sql
+    cqlsh -u root -f schema.cql
 */

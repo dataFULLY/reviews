@@ -4,10 +4,10 @@ const fs = require('file-system');
 const path = require('path');
 
 // Number of records
-const numberOfListings = 1000000;
-const numberOfUsers = 1000000;
-const numberOfResponses = 2500000;
-const numberOfReviews = 10000000;
+const numberOfListings = 100000;
+const numberOfUsers = 100000;
+const numberOfResponses = 250000;
+const numberOfReviews = 1000000;
 
 // Create 10 Million listings
 
@@ -130,7 +130,7 @@ let assignedResponses = 0;
 const getResponseId = (responses = numberOfResponses) => {
   assignedResponses += 1;
   if (assignedResponses > responses) {
-    return '';
+    return undefined;
   }
   return assignedResponses;
 };
@@ -149,11 +149,10 @@ const wsReviews = fs.createWriteStream(path.join(__dirname, 'reviews.csv'));
 
 let reviewCounter = 0;
 const createReview = (i) => {
-  let responseID;
   reviewCounter += 1;
   if (reviewCounter <= numberOfResponses) {
     return `${i + 1},${randomListingId()},${randomUserId()},${getResponseId()},${createReviewDate()},${description},${randomRating()},${randomRating()},${randomRating()},${randomRating()},${randomRating()},${randomRating()}\n`;
-  } else {
+  }
     return `${i + 1},${randomListingId()},${randomUserId()},,${createReviewDate()},${description},${randomRating()},${randomRating()},${randomRating()},${randomRating()},${randomRating()},${randomRating()}\n`;
   }
 };

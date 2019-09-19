@@ -59,7 +59,7 @@ class ReviewsModule extends React.Component {
       .then((listingReviews) => {
       // 2. update the reviews state
         this.setState({
-          reviews: listingReviews.data,
+          reviews: listingReviews.data.rows,
         });
       })
       .then(() => {
@@ -108,7 +108,7 @@ class ReviewsModule extends React.Component {
     axios.get(`/api/listings/${listingID}/host`)
       .then((listingHost) => {
         this.setState({
-          host: listingHost.data[0],
+          host: listingHost.data.rows[0],
         });
       })
       .catch((error) => {

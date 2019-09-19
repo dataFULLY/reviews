@@ -77,7 +77,7 @@ class ReviewEntry extends React.Component {
     axios.get(`/api/listings/users/${userID}`)
       .then((listingUser) => {
         this.setState({
-          user: listingUser.data[0],
+          user: listingUser.data.rows[0],
         });
       })
       .catch((error) => {
@@ -90,7 +90,7 @@ class ReviewEntry extends React.Component {
       axios.get(`/api/listings/review/response/${responseID}`)
         .then((reviewResponse) => {
           this.setState({
-            response: reviewResponse.data[0].comment,
+            response: reviewResponse.data.rows[0].comment,
           });
         })
         .catch((error) => {
