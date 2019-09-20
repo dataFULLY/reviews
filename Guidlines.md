@@ -60,7 +60,7 @@
 
 ### DBMS Benchmarking
 
-- [ ] Verify that all queries used by your API will run in under 50ms. To achieve this goal, you may need to do some performance tuning work on your DBMS.
+- [x] Verify that all queries used by your API will run in under 50ms. To achieve this goal, you may need to do some performance tuning work on your DBMS.
   - Confirm performance by running the queries used by your API either by:
     - Writing tests (using/modifying existing tests is ok)
     - Using the DB console to execute and time queries
@@ -69,8 +69,8 @@
     - Your queries should be the same queries you would use to support your API. Benchmarking a query that your service wouldn't use isn't helpful to determining performance.
     - Queries will be different depending on the technology in use.
     - 50ms is the upper limit. Most queries for this project should be optimizable to around 10ms or less. While most queries for this project can be optimized to execute in significantly less than 50ms, there may be very legitimate reasons why this goal might not be reachable in your circumstance.
-- [ ] Compare the performance of these two systems against each other and pick the one that performs best for *your* use-case.
-- [ ] Select one of your DBMS options for your final implementation
+- [x] Compare the performance of these two systems against each other and pick the one that performs best for *your* use-case.
+- [x] Select one of your DBMS options for your final implementation
   - Once you have made a final decision on DBMS:
     - Update your API server to use that Database
     - Verify your UI still works as expected
