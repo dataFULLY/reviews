@@ -15,6 +15,20 @@ app.use(compression());
 app.use(cors());
 app.use('/listings/:listing_id', express.static(`${__dirname}/../client/dist`));
 
+// CREATE
+app.post('/api/listings/:id/reviews', (req, res) => {
+  db.insertListing(req, (err, data) => {
+    if (err) {
+      console.log('CAN\'T INSERT REVIEW: ', err);
+      res.status(500).send(err);
+    } else {
+      console.log('Successfully inserted review');
+      res.status(200).send(data);
+    }
+  });
+});
+
+// READ
 app.get('/api/listings/:listing_id/reviews', (req, res) => {
   const listingID = req.params.listing_id;
   db.getListingReviews(listingID, (error, data) => {
@@ -58,6 +72,36 @@ app.get('/api/listings/review/response/:response_id', (req, res) => {
       console.log('SERVER GET REVIEW RESPONSE ERROR: ', error);
       res.status(500).send(error);
     } else {
+      res.status(200).send(data);
+    }
+  });
+});
+
+// UPDATE
+app.put('/api/reviews/:review_id', (req, res) => {
+  const reviewID = req.params.review_id;
+  const { comment } = req.body;
+  console.log(typeof req.body.comment);
+  db.updateListing(reviewID, comment, (err, data) => {
+    if (err) {
+      console.log('CAN\'T UPDATE: ', err);
+      res.status(500).send(err);
+    } else {
+      console.log(`Successfully updated review ${reviewID}`);
+      res.status(200).send(data);
+    }
+  });
+});
+
+// DELETE
+app.delete('/api/reviews/:review_id', (req, res) => {
+  const reviewID = req.params.review_id;
+  db.deleteListing(reviewID, (err, data) => {
+    if (err) {
+      console.log('CAN\'T DELETE: ', err);
+      res.status(500).send(err);
+    } else {
+      console.log(`Successfully deleted review ${reviewID}`);
       res.status(200).send(data);
     }
   });
