@@ -77,7 +77,7 @@
 
 ## Phase 2: Measure Initial Performance
 
-- [ ] Install New Relic on your service and proxy to report metrics about your servers' performance to the New Relic dashboard. At minimum, you must monitor response time (aka latency), throughput, and error rate -- these are the default metrics reported by New Relic. Other metrics may be useful to your specific application but are not required.
+- [x] Install New Relic on your service and proxy to report metrics about your servers' performance to the New Relic dashboard. At minimum, you must monitor response time (aka latency), throughput, and error rate -- these are the default metrics reported by New Relic. Other metrics may be useful to your specific application but are not required.
   - **Caution: New Relic has a 14-day free trial**. Do not start your New Relic trial in the first week of the project or you will run out of time! (If you run out of time, you can sign up for a 2nd account with a different email address.)
 - [ ] Stress-test Your Service:
   - [ ] Stress test your service in development (on your laptop), in isolation from other services, using the simulated data you created and realistic requests to your service's API by scaling the number of request per second: 1, 10, 100, 1K.
