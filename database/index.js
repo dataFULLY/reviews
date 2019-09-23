@@ -80,6 +80,8 @@ const insertListing = (info, callback) => {
   });
 };
 
+// client.end();
+
 module.exports = {
   getListingReviews,
   getListingHost,
